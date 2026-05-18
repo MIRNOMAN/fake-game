@@ -2,6 +2,8 @@ import SlotMachine from "@/components/SlotMachine";
 import TarotReading from "@/components/TarotReading";
 import Pachinko from "@/components/Pachinko";
 import FakeCaptcha from "@/components/FakeCaptcha";
+import Minecraft from "@/components/Minecraft";
+import GTA5 from "@/components/GTA5";
 
 export default function Home() {
   return (
@@ -16,10 +18,43 @@ export default function Home() {
             </h1>
             <span className="text-2xl">◆</span>
           </div>
-          <div className="flex gap-4 text-xs">
-            <span className="px-3 py-1 border border-cyan-500 text-cyan-400 rounded hover:bg-cyan-500/10 cursor-pointer transition">
-              STATUS: ONLINE
-            </span>
+          <div className="flex gap-3 text-xs flex-wrap justify-end">
+            <a
+              href="/games"
+              className="px-3 py-1 border border-purple-500 text-purple-400 rounded hover:bg-purple-500/10 transition"
+            >
+              GAMES HUB
+            </a>
+            <a
+              href="/advanced-games"
+              className="px-3 py-1 border border-red-500 text-red-400 rounded hover:bg-red-500/10 transition animate-pulse"
+            >
+              ⚡ ADVANCED
+            </a>
+            <a
+              href="/profile"
+              className="px-3 py-1 border border-pink-500 text-pink-400 rounded hover:bg-pink-500/10 transition"
+            >
+              👤 PROFILE
+            </a>
+            <a
+              href="/leaderboard"
+              className="px-3 py-1 border border-yellow-500 text-yellow-400 rounded hover:bg-yellow-500/10 transition"
+            >
+              🏆 LEADERBOARD
+            </a>
+            <a
+              href="/achievements"
+              className="px-3 py-1 border border-amber-500 text-amber-400 rounded hover:bg-amber-500/10 transition"
+            >
+              🏅 ACHIEVEMENTS
+            </a>
+            <a
+              href="/analytics"
+              className="px-3 py-1 border border-blue-500 text-blue-400 rounded hover:bg-blue-500/10 transition"
+            >
+              📊 ANALYTICS
+            </a>
             <span className="px-3 py-1 border border-green-500 text-green-400 rounded hover:bg-green-500/10 cursor-pointer transition">
               v.2026.05.18
             </span>
@@ -38,12 +73,66 @@ export default function Home() {
               </h2>
               <div className="w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mb-6"></div>
               <p className="text-cyan-300 text-sm mb-4 leading-relaxed">
-                Enter the vaporwave realm where retro meets future. Four digital
+                Enter the vaporwave realm where retro meets future. Six digital
                 experiences await your exploration in the interactive zone.
               </p>
               {/* <p className="text-gray-400 text-xs">
                 // INITIALIZE GAMES | ACCESS SIDEBAR FOR INTERACTIVE ELEMENTS
               </p> */}
+            </div>
+
+            {/* Featured Top 2 Games */}
+            <div className="mb-12 p-6 bg-gradient-to-r from-purple-950/40 to-pink-950/40 border-2 border-pink-500 rounded-lg shadow-lg shadow-pink-500/30">
+              <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">
+                ⭐ FEATURED FAVORITES ⭐
+              </h2>
+              <p className="text-xs text-gray-400 mb-6">
+                Most engaging games | Try these first!
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Featured Slot Machine */}
+                <div className="border-2 border-purple-500 bg-black/60 p-4 rounded hover:border-purple-300 transition">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-bold text-purple-300">
+                      🎰 SLOTS
+                    </h3>
+                    <span className="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded">
+                      TOP CHOICE
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400 mb-3">
+                    🎯 Highest engagement rate | Win streaks | Dynamic
+                    multipliers | Local leaderboard
+                  </p>
+                  <div className="flex gap-2 text-xs justify-between bg-gray-950 p-2 rounded">
+                    <span>✓ Easy to learn</span>
+                    <span>✓ Highly addictive</span>
+                    <span>✓ Quick rounds</span>
+                  </div>
+                </div>
+
+                {/* Featured Tarot */}
+                <div className="border-2 border-cyan-500 bg-black/60 p-4 rounded hover:border-cyan-300 transition">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-bold text-cyan-300">
+                      🔮 TAROT
+                    </h3>
+                    <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
+                      POPULAR
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400 mb-3">
+                    🎯 22 unique cards | Reading history | Stats tracking |
+                    Mystical vibes
+                  </p>
+                  <div className="flex gap-2 text-xs justify-between bg-gray-950 p-2 rounded">
+                    <span>✓ Immersive</span>
+                    <span>✓ Collectible</span>
+                    <span>✓ Replayable</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Games Grid */}
@@ -53,13 +142,13 @@ export default function Home() {
                   🎰 SLOT MACHINE EXPERIENCE
                 </h3>
                 <p className="text-sm text-gray-400 mb-6">
-                  Test your luck in this retro-inspired slot machine. Pull the
-                  lever and watch the symbols spin. Match three identical
-                  symbols for a JACKPOT! Built entirely with client-side React
-                  state—no external dependencies needed.
+                  Test your luck with dynamic multipliers, win streaks, and
+                  persistent stats. Match three symbols to trigger jackpots with
+                  increasing multiplier bonuses. Track your best performance
+                  with local leaderboards and reset option.
                 </p>
                 <p className="text-xs text-green-400 font-mono mb-4">
-                  {/* // Classic gambling simulator with vaporwave aesthetics */}
+                  {/* // Features: Multipliers | Win Streaks | Stats Tracking | Reset Option */}
                 </p>
               </div>
 
@@ -68,13 +157,13 @@ export default function Home() {
                   🔮 CYBER TAROT DIVINATION
                 </h3>
                 <p className="text-sm text-gray-400 mb-6">
-                  Consult the digital oracle. Draw from a deck of 22 Major
-                  Arcana cards and receive cosmic guidance. Each card carries
-                  mystical meaning channeled through the cyber spirits. No
-                  APIs—pure local magic.
+                  Explore all 22 Major Arcana cards with reading history
+                  tracking, card statistics, and unique card distribution
+                  analysis. Each reading is saved locally for continuous
+                  progression and mystical insights.
                 </p>
                 <p className="text-xs text-cyan-400 font-mono mb-4">
-                  {/* // Temporal nexus connected to your digital destiny */}
+                  {/* // Features: 22 Cards | Reading History | Stats Tracking | Card Distribution */}
                 </p>
               </div>
             </div>
@@ -160,6 +249,20 @@ export default function Home() {
                 🤖 Gaming Module 4
               </p>
               <FakeCaptcha />
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs text-green-400 font-bold uppercase tracking-wider">
+                ⛏ Gaming Module 5
+              </p>
+              <Minecraft />
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs text-red-400 font-bold uppercase tracking-wider">
+                🚗 Gaming Module 6
+              </p>
+              <GTA5 />
             </div>
           </div>
 

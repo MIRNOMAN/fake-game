@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/useToast";
 
 // Expanded Major Arcana - 22 Cards for deeper mystical experience
@@ -120,6 +121,23 @@ export default function TarotReading() {
   const { showInfo } = useToast();
   const [card, setCard] = useState(null);
   const [reading, setReading] = useState(false);
+  const [readings, setReadings] = useState([]);
+  const [totalReadings, setTotalReadings] = useState(0);
+
+  // Load stats from localStorage
+  useEffect(() => {
+    const savedReadings = localStorage.getItem("tarotReadings");
+    if (savedReadings) {
+      const data = JSON.parse(savedReadings);
+      setReadings(data);
+      setTotalReadings(data.length);
+    }
+  }, []);
+
+  // Save readings to localStorage
+  useEffect(() => {
+    localStorage.setItem("tarotReadings", JSON.stringify(readings));
+  }, [readings]);
 
   const drawCard = () => {
     setReading(true);
@@ -128,10 +146,32 @@ export default function TarotReading() {
 
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * tarotDeck.length);
-      setCard(tarotDeck[randomIndex]);
+      const drawnCard = tarotDeck[randomIndex];
+      setCard(drawnCard);
       setReading(false);
-      showInfo(`✨ Card revealed: ${tarotDeck[randomIndex].name}`);
-    }, 1500); // একটি মিস্টিক্যাল ডিলে বা লোডিং টাইম
+      setTotalReadings((prev) => prev + 1);
+      setReadings((prev) => [
+        ...prev,
+        { card: drawnCard.name, timestamp: new Date().toLocaleTimeString() },
+      ]);
+      showInfo(`✨ Card revealed: ${drawnCard.name}`);
+    }, 1500);
+  };
+
+  const mostDrawnCard =
+    readings.length > 0
+      ? readings.reduce((acc, r) => {
+          acc[r.card] = (acc[r.card] || 0) + 1;
+          return acc;
+        }, {})
+      : {};
+  const topCard = Object.entries(mostDrawnCard).sort((a, b) => b[1] - a[1])[0];
+
+  const resetReadings = () => {
+    setReadings([]);
+    setTotalReadings(0);
+    setCard(null);
+    localStorage.removeItem("tarotReadings");
   };
 
   return (
@@ -139,6 +179,26 @@ export default function TarotReading() {
       <h3 className="text-sm mb-3 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-bold">
         🔮 CYBER TAROT 🔮
       </h3>
+
+      {/* Stats Display */}
+      <div className="grid grid-cols-3 gap-1 mb-3 text-xs bg-gray-950 p-2 rounded border border-cyan-600">
+        <div>
+          <p className="text-cyan-400">Readings</p>
+          <p className="font-bold text-yellow-300">{totalReadings}</p>
+        </div>
+        <div>
+          <p className="text-purple-400">Top Card</p>
+          <p className="font-bold text-pink-300">
+            {topCard ? topCard[1] : "N/A"}x
+          </p>
+        </div>
+        <div>
+          <p className="text-green-400">Unique</p>
+          <p className="font-bold text-green-300">
+            {Object.keys(mostDrawnCard).length}
+          </p>
+        </div>
+      </div>
 
       <div className="relative h-48 flex flex-col items-center justify-center border-2 border-dashed border-cyan-600 my-4 p-4 bg-gradient-to-b from-gray-950 to-black overflow-hidden">
         {/* Glitch effect background */}
@@ -188,13 +248,21 @@ export default function TarotReading() {
         </div>
       </div>
 
-      <button
-        onClick={drawCard}
-        disabled={reading}
-        className="w-full px-4 py-2 bg-gradient-to-r from-cyan-900 to-blue-900 text-white border-2 border-cyan-500 hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:from-gray-700 disabled:to-gray-700 disabled:border-gray-500 disabled:shadow-none text-xs uppercase font-bold transition-all duration-200 active:scale-95"
-      >
-        {reading ? "◉ READING..." : "◯ DRAW A CARD"}
-      </button>
+      <div className="flex gap-2">
+        <button
+          onClick={drawCard}
+          disabled={reading}
+          className="flex-1 px-4 py-2 bg-gradient-to-r from-cyan-900 to-blue-900 text-white border-2 border-cyan-500 hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:from-gray-700 disabled:to-gray-700 disabled:border-gray-500 disabled:shadow-none text-xs uppercase font-bold transition-all duration-200 active:scale-95"
+        >
+          {reading ? "◉ READING..." : "◯ DRAW A CARD"}
+        </button>
+        <button
+          onClick={resetReadings}
+          className="px-3 py-2 bg-gray-800 text-gray-400 border border-gray-600 hover:border-red-500 hover:text-red-400 text-xs uppercase font-bold transition-all"
+        >
+          🔄
+        </button>
+      </div>
     </div>
   );
 }
