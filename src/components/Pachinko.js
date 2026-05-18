@@ -129,7 +129,10 @@ export default function Pachinko() {
       </div>
 
       {/* Pachinko Board */}
-      <div className="relative mx-auto mb-4 bg-gray-950 border-2 border-pink-600 rounded overflow-hidden" style={{ width: boardWidth, height: boardHeight }}>
+      <div
+        className="relative mx-auto mb-4 bg-gray-950 border-2 border-pink-600 rounded overflow-hidden"
+        style={{ width: boardWidth, height: boardHeight }}
+      >
         {/* Pegs */}
         {pegs.map((peg, i) => (
           <div

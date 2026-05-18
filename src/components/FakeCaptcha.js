@@ -29,7 +29,8 @@ export default function FakeCaptcha() {
   ];
 
   const generateChallenge = () => {
-    const randomChallenge = challenges[Math.floor(Math.random() * challenges.length)];
+    const randomChallenge =
+      challenges[Math.floor(Math.random() * challenges.length)];
     setChallenge({ ...randomChallenge });
     setSelectedItems([]);
     setVerified(false);
@@ -108,9 +109,7 @@ export default function FakeCaptcha() {
           </div>
 
           {/* Attempts */}
-          <p className="text-xs text-red-400 mb-2">
-            Attempts: {attempts}/3
-          </p>
+          <p className="text-xs text-red-400 mb-2">Attempts: {attempts}/3</p>
 
           <button
             onClick={handleVerify}
