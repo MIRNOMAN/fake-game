@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
+import { useToast } from "@/hooks/useToast";
 
 const symbols = ["🍒", "🍋", "🍇", "💎", "7️⃣", "🎯", "🔥", "⭐", "👾", "💸"];
 
 export default function SlotMachine() {
+  const { showSuccess, showWarning } = useToast();
   const [reels, setReels] = useState(["❓", "❓", "❓"]);
   const [spinning, setSpinning] = useState(false);
   const [message, setMessage] = useState("Spin to win!");
@@ -39,8 +41,10 @@ export default function SlotMachine() {
           finalReels[1] === finalReels[2]
         ) {
           setMessage("🎉 JACKPOT! 🎉");
+          showSuccess("🎉 TRIPLE MATCH! JACKPOT WON! 🎉");
         } else {
           setMessage("Try Again, Punk!");
+          showWarning("❌ No match. Better luck next time!");
         }
       }
     }, 100);

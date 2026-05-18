@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/useToast";
 
 export default function Pachinko() {
+  const { showSuccess, showInfo, showWarning } = useToast();
   const [balls, setBalls] = useState([]);
   const [score, setScore] = useState(0);
   const [dropping, setDropping] = useState(false);
@@ -107,6 +109,15 @@ export default function Pachinko() {
           newSlots[slotIndex]++;
           return newSlots;
         });
+
+        // Toast notifications based on slot value
+        if (points === 200) {
+          showSuccess(`🟢 MEGA HIT! +${points} POINTS! 🟢`);
+        } else if (points === 100) {
+          showInfo(`🟡 GOOD HIT! +${points} POINTS!`);
+        } else {
+          showWarning(`🔵 LANDED! +${points} POINTS`);
+        }
 
         clearInterval(animation);
         setBalls([]);

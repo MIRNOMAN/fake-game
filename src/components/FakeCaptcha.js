@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/useToast";
 
 export default function FakeCaptcha() {
+  const { showSuccess, showError, showWarning, showInfo } = useToast();
   const [challenge, setChallenge] = useState(null);
   const [attempts, setAttempts] = useState(0);
   const [verified, setVerified] = useState(false);
@@ -59,9 +61,14 @@ export default function FakeCaptcha() {
 
     if (isCorrect) {
       setVerified(true);
+      showSuccess("✓ VERIFICATION SUCCESS! System access granted.");
     } else if (attempts >= 2) {
-      alert("❌ CAPTCHA FAILED! Too many attempts.");
-      generateChallenge();
+      showError("✗ CAPTCHA FAILED! Too many attempts. Resetting challenge...");
+      setTimeout(() => {
+        generateChallenge();
+      }, 2000);
+    } else {
+      showWarning("⚠ INCORRECT SELECTION! Try again...");
     }
   };
 
@@ -81,7 +88,10 @@ export default function FakeCaptcha() {
             You have been authenticated by the cyber gods.
           </p>
           <button
-            onClick={generateChallenge}
+            onClick={() => {
+              generateChallenge();
+              showInfo("🔄 New challenge loaded. Get ready!");
+            }}
             className="w-full px-4 py-2 bg-gradient-to-r from-green-700 to-emerald-700 text-white border-2 border-green-400 hover:border-green-200 hover:shadow-lg hover:shadow-green-500/50 text-xs uppercase font-bold transition-all duration-200 active:scale-95"
           >
             🔄 NEW CHALLENGE

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useToast } from "@/hooks/useToast";
 
 // Expanded Major Arcana - 22 Cards for deeper mystical experience
 const tarotDeck = [
@@ -116,17 +117,20 @@ const tarotDeck = [
 ];
 
 export default function TarotReading() {
+  const { showInfo } = useToast();
   const [card, setCard] = useState(null);
   const [reading, setReading] = useState(false);
 
   const drawCard = () => {
     setReading(true);
     setCard(null);
+    showInfo("🔮 Accessing the temporal nexus...");
 
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * tarotDeck.length);
       setCard(tarotDeck[randomIndex]);
       setReading(false);
+      showInfo(`✨ Card revealed: ${tarotDeck[randomIndex].name}`);
     }, 1500); // একটি মিস্টিক্যাল ডিলে বা লোডিং টাইম
   };
 
